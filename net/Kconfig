@@ -474,4 +474,4 @@ config HAVE_EBPF_JIT
 	bool
 
 config SHORTCUT_FE
-	bool "Enables kernel network stack path for Shortcut  Forwarding Engine
+	bool "Enables kernel network stack path for Shortcut  Forwarding Engine"
