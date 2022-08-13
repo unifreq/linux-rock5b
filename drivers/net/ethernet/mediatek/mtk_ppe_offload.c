@@ -412,7 +412,7 @@ mtk_flow_offload_replace(struct mtk_eth *eth, struct flow_cls_offload *f)
 
 	entry->cookie = f->cookie;
 	timestamp = mtk_eth_timestamp(eth);
-	hash = mtk_foe_entry_commit(&eth->ppe, &foe, timestamp);
+	hash = mtk_foe_entry_commit(eth->ppe, &foe, timestamp);
 	if (hash < 0) {
 		err = hash;
 		goto free;
@@ -427,7 +427,7 @@ mtk_flow_offload_replace(struct mtk_eth *eth, struct flow_cls_offload *f)
 
 	return 0;
 clear_flow:
-	mtk_foe_entry_clear(&eth->ppe, hash);
+	mtk_foe_entry_clear(eth->ppe, hash);
 free:
 	kfree(entry);
 	if (wed_index >= 0)
@@ -445,7 +445,7 @@ mtk_flow_offload_destroy(struct mtk_eth *eth, struct flow_cls_offload *f)
 	if (!entry)
 		return -ENOENT;
 
-	mtk_foe_entry_clear(&eth->ppe, entry->hash);
+	mtk_foe_entry_clear(eth->ppe, entry->hash);
 	rhashtable_remove_fast(&eth->flow_table, &entry->node,
 			       mtk_flow_ht_params);
 	if (entry->wed_index >= 0)
@@ -467,7 +467,7 @@ mtk_flow_offload_stats(struct mtk_eth *eth, struct flow_cls_offload *f)
 	if (!entry)
 		return -ENOENT;
 
-	timestamp = mtk_foe_entry_timestamp(&eth->ppe, entry->hash);
+	timestamp = mtk_foe_entry_timestamp(eth->ppe, entry->hash);
 	if (timestamp < 0)
 		return -ETIMEDOUT;
 
@@ -523,7 +523,7 @@ mtk_eth_setup_tc_block(struct net_device *dev, struct flow_block_offload *f)
 	struct flow_block_cb *block_cb;
 	flow_setup_cb_t *cb;
 
-	if (!eth->ppe.foe_table)
+	if (!eth->ppe || !eth->ppe->foe_table)
 		return -EOPNOTSUPP;
 
 	if (f->binder_type != FLOW_BLOCK_BINDER_TYPE_CLSACT_INGRESS)
@@ -575,7 +575,7 @@ int mtk_eth_setup_tc(struct net_device *dev, enum tc_setup_type type,
 
 int mtk_eth_offload_init(struct mtk_eth *eth)
 {
-	if (!eth->ppe.foe_table)
+	if (!eth->ppe || !eth->ppe->foe_table)
 		return 0;
 
 	return rhashtable_init(&eth->flow_table, &mtk_flow_ht_params);
