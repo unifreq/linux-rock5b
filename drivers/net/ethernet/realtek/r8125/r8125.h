@@ -51,11 +51,9 @@
 typedef int netdev_tx_t;
 #endif
 
-/*
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(4,12,0)&& !defined(ENABLE_LIB_SUPPORT)
 #define RTL_USE_NEW_INTR_API
 #endif
-*/
 
 #if LINUX_VERSION_CODE < KERNEL_VERSION(2,6,22)
 #define skb_transport_offset(skb) (skb->h.raw - skb->data)
@@ -367,7 +365,7 @@ do { \
 #define RSS_SUFFIX ""
 #endif
 
-#define RTL8125_VERSION "9.009.00" NAPI_SUFFIX DASH_SUFFIX REALWOW_SUFFIX PTP_SUFFIX RSS_SUFFIX
+#define RTL8125_VERSION "9.009.02" NAPI_SUFFIX DASH_SUFFIX REALWOW_SUFFIX PTP_SUFFIX RSS_SUFFIX
 #define MODULENAME "r8125"
 #define PFX MODULENAME ": "
 
