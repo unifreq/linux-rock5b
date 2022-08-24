@@ -288,6 +288,16 @@
 	};
 };
 
+&dmc {
+	center-supply = <&vdd_ddr_s0>;
+	mem-supply = <&vdd_log_s0>;
+	status = "okay";
+};
+
+&dfi {
+	status = "okay";
+};
+
 &i2c1 {
 	status = "okay";
 	pinctrl-names = "default";
