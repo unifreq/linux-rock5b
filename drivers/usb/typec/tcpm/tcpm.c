@@ -5999,7 +5999,7 @@ static void tcpm_init(struct tcpm_port *port)
 	 * Some adapters need a clean slate at startup, and won't recover
 	 * otherwise. So do not try to be fancy and force a clean disconnect.
 	 */
-	tcpm_set_state(port, PORT_RESET, 0);
+	//tcpm_set_state(port, PORT_RESET, 0);
 }
 
 static int tcpm_port_type_set(struct typec_port *p, enum typec_port_type type)
