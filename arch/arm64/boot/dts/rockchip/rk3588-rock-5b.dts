@@ -682,6 +682,7 @@
 	status = "okay";
 	pinctrl-names = "default";
 	pinctrl-0 = <&i2c4m1_xfer>;
+	clock-frequency = <1000000>;
 
 	usbc0: fusb302@22 {
 		compatible = "fcs,fusb302";
