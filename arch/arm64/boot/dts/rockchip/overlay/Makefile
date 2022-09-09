@@ -33,7 +33,11 @@ dtbo-$(CONFIG_ARCH_ROCKCHIP) += \
 	rk3588-uart4-m2.dtbo \
 	rk3588-uart7-m1-ctsn-rtsn.dtbo \
 	rk3588-uart7-m1.dtbo \
-	rk3588-uart7-m2.dtbo
+	rk3588-uart7-m2.dtbo \
+	rk3588-rock-5b-pd-24w.dtbo \
+	rk3588-rock-5b-pd-36w.dtbo \
+	rk3588-rock-5b-pd-45w.dtbo \
+	rk3588-rock-5b-pd-65w.dtbo
 
 scr-$(CONFIG_ARCH_ROCKCHIP) += \
 	rockchip-fixup.scr
