@@ -265,6 +265,7 @@ static inline void stmmac_set_ethtool_ops(struct net_device *netdev)
 }
 #endif
 
+int stmmac_init_tstamp_counter(struct stmmac_priv *priv, u32 systime_flags);
 #ifdef CONFIG_STMMAC_PTP
 void stmmac_ptp_register(struct stmmac_priv *priv);
 void stmmac_ptp_unregister(struct stmmac_priv *priv);
