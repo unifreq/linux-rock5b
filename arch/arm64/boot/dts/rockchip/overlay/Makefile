@@ -3,6 +3,7 @@ dtbo-$(CONFIG_ARCH_ROCKCHIP) += \
 	rock-5ab-camera-imx415.dtbo \
 	rock-5a-radxa-display-10fhd.dtbo \
 	rock-5b-radxa-display-10fhd.dtbo \
+	rk3588-full-cpufreq.dtbo \
 	rk3588-i2c0-m1.dtbo \
 	rk3588-i2c1-m0.dtbo \
 	rk3588-i2c3-m1.dtbo \

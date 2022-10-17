@@ -86,7 +86,7 @@
 		pinctrl-names = "default";
 		pinctrl-0 = <&wifi_host_wake_irq>;
 		WIFI,host_wake_irq = <&gpio0 RK_PB2 GPIO_ACTIVE_HIGH>;
-		status = "okay";
+		status = "disabled";
 	};
 
 	bt_uart6: wireless_bluetooth: wireless-bluetooth {
@@ -99,7 +99,7 @@
 		pinctrl-1 = <&uart6_gpios>;
 		BT,reset_gpio    = <&gpio3 RK_PA6 GPIO_ACTIVE_HIGH>;
 		BT,wake_host_irq = <&gpio0 RK_PC5 GPIO_ACTIVE_HIGH>;
-		status = "okay";
+		status = "disabled";
 	};
 
 	vcc_1v1_nldo_s3: vcc-1v1-nldo-s3 {
@@ -528,13 +528,13 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&sdiom0_pins>;
 	sd-uhs-sdr104;
-	status = "okay";
+	status = "disabled";
 };
 
 &uart6 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&uart6m1_xfer &uart6m1_ctsn>;
-	status = "okay";
+	status = "disabled";
 };
 
 &tsadc {
