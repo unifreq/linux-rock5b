@@ -5267,6 +5267,8 @@ static void _tcpm_pd_vbus_off(struct tcpm_port *port)
 	case SNK_TRYWAIT_DEBOUNCE:
 		break;
 	case SNK_ATTACH_WAIT:
+		port->debouncing = false;
+		break;
 	case SNK_DEBOUNCED:
 		/* Do nothing, as TCPM is still waiting for vbus to reaach VSAFE5V to connect */
 		break;
