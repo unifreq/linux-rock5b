@@ -43,44 +43,6 @@
 		};
 	};
 
-	leds {
-		compatible = "gpio-leds";
-                pinctrl-names = "default";
-                pinctrl-0 = <&led_intelligent_pin>, <&led_hdd_pin>, <&led_net_pin>, <&led_work_pin>;
-
-		led_intelligent: led-intelligent {
-			gpios = <&gpio0 RK_PA0 GPIO_ACTIVE_HIGH>;
-			label = "red:intelligent";
-			function = LED_FUNCTION_HEARTBEAT;
-			color = <LED_COLOR_ID_RED>;
-			//linux,default-trigger = "heartbeat";
-		};
-
-		led_hdd: led-hdd {
-			gpios = <&gpio2 RK_PC3 GPIO_ACTIVE_HIGH>;
-			label = "blue:hdd";
-			function = LED_FUNCTION_STATUS;
-			color = <LED_COLOR_ID_BLUE>;
-			//linux,default-trigger = "default-on";
-		};
-
-		led_net: led-net {
-			gpios = <&gpio2 RK_PC5 GPIO_ACTIVE_HIGH>;
-			label = "amber:net";
-			function = LED_FUNCTION_WAN;
-			color = <LED_COLOR_ID_AMBER>;
-			//linux,default-trigger = "default-on";
-		};
-
-		led_work: led-work {
-			gpios = <&gpio3 RK_PB7 GPIO_ACTIVE_HIGH>;
-			label = "green:work";
-			function = LED_FUNCTION_POWER;
-			color = <LED_COLOR_ID_GREEN>;
-			//linux,default-trigger = "default-on";
-		};
-	};
-	
 	es8388_sound: es8388-sound {
 		status = "okay";
 		compatible = "rockchip,multicodecs-card";
@@ -140,6 +102,44 @@
 		};
 		dailink0_master: simple-audio-card,codec {
 			sound-dai = <&hdmiin_dc>;
+		};
+	};
+
+	leds {
+		compatible = "gpio-leds";
+                pinctrl-names = "default";
+                pinctrl-0 = <&led_intelligent_pin>, <&led_hdd_pin>, <&led_net_pin>, <&led_work_pin>;
+
+		led_intelligent: led-intelligent {
+			gpios = <&gpio0 RK_PA0 GPIO_ACTIVE_HIGH>;
+			label = "red:intelligent";
+			function = LED_FUNCTION_HEARTBEAT;
+			color = <LED_COLOR_ID_RED>;
+			//linux,default-trigger = "heartbeat";
+		};
+
+		led_hdd: led-hdd {
+			gpios = <&gpio2 RK_PC3 GPIO_ACTIVE_HIGH>;
+			label = "blue:hdd";
+			function = LED_FUNCTION_STATUS;
+			color = <LED_COLOR_ID_BLUE>;
+			//linux,default-trigger = "default-on";
+		};
+
+		led_net: led-net {
+			gpios = <&gpio2 RK_PC5 GPIO_ACTIVE_HIGH>;
+			label = "amber:net";
+			function = LED_FUNCTION_WAN;
+			color = <LED_COLOR_ID_AMBER>;
+			//linux,default-trigger = "default-on";
+		};
+
+		led_work: led-work {
+			gpios = <&gpio3 RK_PB7 GPIO_ACTIVE_HIGH>;
+			label = "green:work";
+			function = LED_FUNCTION_POWER;
+			color = <LED_COLOR_ID_GREEN>;
+			//linux,default-trigger = "default-on";
 		};
 	};
 
@@ -242,8 +242,16 @@
 		regulator-always-on;
 		regulator-min-microvolt = <5000000>;
 		regulator-max-microvolt = <5000000>;
+		enable-active-high;
+		gpio = <&gpio4 RK_PB0 GPIO_ACTIVE_HIGH>;
 		vin-supply = <&vcc5v0_usb>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&vcc5v0_host_en>;
 	};
+};
+
+&backlight {
+	status = "disabled";
 };
 
 &combphy0_ps {
@@ -258,6 +266,16 @@
 	status = "okay";
 };
 
+&dfi {
+	status = "okay";
+};
+
+&dmc {
+	center-supply = <&vdd_ddr_s0>;
+	mem-supply = <&vdd_log_s0>;
+	status = "okay";
+};
+
 &dp0 {
 	status = "okay";
 };
@@ -265,17 +283,7 @@
 &dp0_in_vp2 {
 	status = "okay";
 };
-/*
-&dp1 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&dp1m0_pins>;
-	status = "okay";
-};
 
-&dp1_in_vp2 {
-	status = "okay";
-};
-*/
 /*
  * mipi_dcphy1 needs to be enabled
  * when dsi1 is enabled
@@ -310,7 +318,7 @@
 		     &gmac0_rgmii_bus>;
 
 	tx_delay = <0x44>;
-	/*rx_delay = <0x4f>;*/
+	/* rx_delay = <0x4f>; */
 
 	phy-handle = <&rgmii_phy0>;
 	status = "okay";
@@ -348,16 +356,6 @@
 };
 
 &hdptxphy_hdmi1 {
-	status = "okay";
-};
-
-&dmc {
-	center-supply = <&vdd_ddr_s0>;
-	mem-supply = <&vdd_log_s0>;
-	status = "okay";
-};
-
-&dfi {
 	status = "okay";
 };
 
@@ -544,24 +542,6 @@
 		};
 	};
 
-	led {
-		led_intelligent_pin: led-intelligent-pin {
-			rockchip,pins = <0 RK_PA0 RK_FUNC_GPIO &pcfg_pull_none>;
-		};
-
-		led_hdd_pin: led-hdd-pin {
-			rockchip,pins = <2 RK_PC3 RK_FUNC_GPIO &pcfg_pull_none>;
-		};
-
-		led_net_pin: led-net-pin {
-			rockchip,pins = <2 RK_PC5 RK_FUNC_GPIO &pcfg_pull_none>;
-		};
-
-		led_work_pin: led-work-pin {
-			rockchip,pins = <3 RK_PB7 RK_FUNC_GPIO &pcfg_pull_none>;
-		};
-	};
-
 	hdmi {
 		hdmirx_det: hdmirx-det {
 			rockchip,pins = <1 RK_PD5 RK_FUNC_GPIO &pcfg_pull_up>;
@@ -580,15 +560,39 @@
 		};
 	};
 
+	led {
+		led_intelligent_pin: led-intelligent-pin {
+			rockchip,pins = <0 RK_PA0 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+
+		led_hdd_pin: led-hdd-pin {
+			rockchip,pins = <2 RK_PC3 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+
+		led_net_pin: led-net-pin {
+			rockchip,pins = <2 RK_PC5 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+
+		led_work_pin: led-work-pin {
+			rockchip,pins = <3 RK_PB7 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+	};
+
+	pcie {
+		vcc12v_pcie30_en: vcc12v-pcie30-en {
+			rockchip,pins = <3 RK_PD5 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+	};
+
 	rtl8125 {
 		rtl8125_isolate: rtl8125-isolate {
 			rockchip,pins = <1 RK_PA4 RK_FUNC_GPIO &pcfg_pull_up>;	//GPIO1_A4_d RTL8125B_ISOLATEB_L
 		};
 	};
 
-	pcie {
-		vcc12v_pcie30_en: vcc12v-pcie30-en {
-			rockchip,pins = <3 RK_PD5 RK_FUNC_GPIO &pcfg_pull_up>;
+	usb {
+		vcc5v0_host_en: vcc5v0-host-en {
+			rockchip,pins = <4 RK_PB0 RK_FUNC_GPIO &pcfg_pull_none>;
 		};
 	};
 };
@@ -678,8 +682,4 @@
 
 &vccio_sd_s0 {
 	regulator-ramp-delay = <12500>;
-};
-
-&backlight {
-	status = "disabled";
 };
