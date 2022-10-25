@@ -3,12 +3,17 @@
 
 /dts-v1/;
 
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/leds/common.h>
+#include <dt-bindings/pwm/pwm.h>
+#include <dt-bindings/pinctrl/rockchip.h>
+#include <dt-bindings/input/rk-input.h>
+#include <dt-bindings/display/drm_mipi_dsi.h>
+#include <dt-bindings/display/rockchip_vop.h>
+#include <dt-bindings/sensor-dev.h>
+#include "dt-bindings/usb/pd.h"
 #include "rk3588.dtsi"
 #include "rk3588-rk806-single.dtsi"
-
-#include <dt-bindings/usb/pd.h>
-#include <dt-bindings/input/input.h>
-#include <dt-bindings/display/rockchip_vop.h>
 
 / {
 	model = "HINLINK OWL H88K Board";
@@ -62,6 +67,7 @@
 		work {
 			label = "red:work";
 			gpios = <&gpio0 RK_PA0 GPIO_ACTIVE_HIGH>;
+			linux,default-trigger = "default-on";
 		};
 	};
 
