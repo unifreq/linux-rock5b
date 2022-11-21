@@ -143,6 +143,8 @@
 	vcc3v3_pcie30: vcc3v3-pcie30 {
 		compatible = "regulator-fixed";
 		enable-active-high;
+		regulator-always-on;
+		regulator-boot-on;
 		gpios = <&gpio3 RK_PD5 GPIO_ACTIVE_HIGH>;
 		regulator-min-microvolt = <3300000>;
 		regulator-max-microvolt = <3300000>;
@@ -283,20 +285,6 @@
 	};
 };
 
-&combphy0_ps {
-	pinctrl-names = "default";
-	pinctrl-0 = <&sata_pm_reset>;
-	status = "okay";
-};
-
-&combphy1_ps {
-	status = "okay";
-};
-
-&combphy2_psu {
-	status = "okay";
-};
-
 &cpu_l0 {
 	cpu-supply = <&vdd_cpu_lit_s0>;
 	mem-supply = <&vdd_cpu_lit_s0>;
@@ -366,7 +354,7 @@
 		     &gmac0_rgmii_bus>;
 
 	tx_delay = <0x44>;
-	status = "okay";
+	status = "disabled";
 };
 
 &hdmi0 {
@@ -640,6 +628,14 @@
 	status = "okay";
 };
 
+&combphy1_ps {
+	status = "okay";
+};
+
+&combphy2_psu {
+	status = "okay";
+};
+
 &pcie2x1l0 {
 	reset-gpios = <&gpio0 RK_PB0 GPIO_ACTIVE_HIGH>;
 	status = "okay";
@@ -651,7 +647,7 @@
 };
 
 &pcie30phy {
-	rockchip,pcie30-phymode = <PHY_MODE_PCIE_AGGREGATION>;
+	//rockchip,pcie30-phymode = <PHY_MODE_PCIE_AGGREGATION>;
 	status = "okay";
 };
 
@@ -825,6 +821,12 @@
 	status = "okay";
 };
 
+&combphy0_ps {
+	pinctrl-names = "default";
+	pinctrl-0 = <&sata_pm_reset>;
+	status = "okay";
+};
+
 &sata0 {
 	status = "okay";
 };
@@ -877,6 +879,70 @@
 
 &u2phy1_otg {
 	phy-supply = <&vcc5v0_usb_host>;
+	status = "okay";
+};
+
+&u2phy2 {
+	status = "okay";
+};
+
+&u2phy2_host {
+	status = "okay";
+};
+
+&u2phy3 {
+	status = "okay";
+};
+
+&u2phy3_host {
+	status = "okay";
+};
+
+&usb_host0_ehci {
+	status = "okay";
+};
+
+&usb_host0_ohci {
+	status = "okay";
+};
+
+&usb_host1_ehci {
+	status = "okay";
+};
+
+&usb_host1_ohci {
+	status = "okay";
+};
+
+&usbhost3_0 {
+	status = "okay";
+};
+
+&usbhost_dwc3_0 {
+	status = "okay";
+};
+
+&u2phy1 {
+	status = "okay";
+};
+
+&u2phy1_otg {
+	status = "okay";
+};
+
+&usbdrd3_1{
+	status = "okay";
+};
+
+&usbdrd_dwc3_1{
+	status = "okay";
+};
+
+&usbdp_phy1 {
+	status = "okay";
+};
+
+&usbdp_phy1_u3 {
 	status = "okay";
 };
 
