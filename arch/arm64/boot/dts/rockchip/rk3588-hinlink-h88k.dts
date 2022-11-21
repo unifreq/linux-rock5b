@@ -153,6 +153,60 @@
 		vin-supply = <&vcc12v_dcin>;
 	};
 
+	vcc3v3_m2_sata: vcc3v3-m2-sata {
+		compatible = "regulator-fixed";
+		enable-active-high;
+		regulator-always-on;
+		regulator-boot-on;
+		gpios = <&gpio4 RK_PA4 GPIO_ACTIVE_HIGH>;
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		regulator-name = "vcc3v3_sata";
+		vin-supply = <&vcc12v_dcin>;
+	};
+
+	/* can't work */
+	/*
+	rk_modem: rk-Modem {
+		compatible="4g-modem-platdata";
+		pinctrl-names = "modem-power", "modem-reset";
+		pinctrl-0 = <&modem_power_en>, <&modem_reset_en>;
+		4G,power-gpio = <&gpio4 RK_PA3 GPIO_ACTIVE_HIGH>;
+		4G,reset-gpio = <&gpio4 RK_PC6 GPIO_ACTIVE_HIGH>;
+		status = "okay";
+	};
+	*/
+
+	vcc3v3_modem: vcc3v3-modem {
+		compatible = "regulator-fixed";
+		enable-active-high;
+		regulator-always-on;
+		regulator-boot-on;
+		gpios = <&gpio4 RK_PA3 GPIO_ACTIVE_HIGH>;
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		regulator-name = "vcc3v3_modem";
+		pinctrl-names = "default";
+		pintctrl-0 = <&modem_power_en>;
+		vin-supply = <&vcc_3v3_s3>;
+	};
+
+	/* it's modem reset pin */
+	modem_enable: modem-enable {
+		compatible = "regulator-fixed";
+		enable-active-high;
+		regulator-always-on;
+		regulator-boot-on;
+		gpios = <&gpio4 RK_PC6 GPIO_ACTIVE_HIGH>;
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		regulator-name = "modem-enable";
+		vin-supply = <&vcc_3v3_s3>;
+		startup-delay-us = <500000>;
+		pinctrl-names = "default";
+		pintctrl-0 = <&modem_reset_en>;
+	};
+
 	vcc5v0_usb: vcc5v0-usb {
 		compatible = "regulator-fixed";
 		regulator-always-on;
@@ -694,12 +748,6 @@
 		};
 	};
 
-	sata {
-		sata_pm_reset: sata-pm-reset {
-			rockchip,pins = <4 RK_PA4 RK_FUNC_GPIO &pcfg_output_high>;
-		};
-	};
-
 	usb {
 		vcc5v0_usb_host_en: vcc5v0_usb_host_en {
 			rockchip,pins = <4 RK_PB0 RK_FUNC_GPIO &pcfg_pull_none>;
@@ -717,6 +765,16 @@
 	usb-typec {
 		usbc0_int: usbc0-int {
 			rockchip,pins = <1 RK_PA0 RK_FUNC_GPIO &pcfg_pull_up>;
+		};
+	};
+
+	modem {
+		modem_power_en: modem-power-en {
+			rockchip,pins = <4 RK_PA3 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+
+		modem_reset_en: modem-reset-en {
+			rockchip,pins = <4 RK_PC6 RK_FUNC_GPIO &pcfg_pull_none>;
 		};
 	};
 };
@@ -822,8 +880,6 @@
 };
 
 &combphy0_ps {
-	pinctrl-names = "default";
-	pinctrl-0 = <&sata_pm_reset>;
 	status = "okay";
 };
 
