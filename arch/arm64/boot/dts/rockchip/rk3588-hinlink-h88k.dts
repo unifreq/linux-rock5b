@@ -682,35 +682,6 @@
 	status = "okay";
 };
 
-&combphy1_ps {
-	status = "okay";
-};
-
-&combphy2_psu {
-	status = "okay";
-};
-
-&pcie2x1l0 {
-	reset-gpios = <&gpio0 RK_PB0 GPIO_ACTIVE_HIGH>;
-	status = "okay";
-};
-
-&pcie2x1l1 {
-	reset-gpios = <&gpio4 RK_PA2 GPIO_ACTIVE_HIGH>;
-	status = "okay";
-};
-
-&pcie30phy {
-	//rockchip,pcie30-phymode = <PHY_MODE_PCIE_AGGREGATION>;
-	status = "okay";
-};
-
-&pcie3x4 {
-	reset-gpios = <&gpio4 RK_PB6 GPIO_ACTIVE_HIGH>;
-	vpcie3v3-supply = <&vcc3v3_pcie30>;
-	status = "okay";
-};
-
 &pinctrl {
 	leds {
 		led_net_en: led_net_en {
@@ -879,14 +850,6 @@
 	status = "okay";
 };
 
-&combphy0_ps {
-	status = "okay";
-};
-
-&sata0 {
-	status = "okay";
-};
-
 &sdhci {
 	bus-width = <8>;
 	max-frequency = <200000000>;
@@ -920,6 +883,31 @@
 	status = "okay";
 };
 
+/* Begin of USB
+ * TYPEC0 
+ *   usbdrd3_0 + usbdrd_dwc3_0 
+ *   u2phy0 + u2phy0_otg + usbdp_phy0 + usbdp_phy0_u3
+ */
+&usbdrd3_0 {
+	status = "okay";
+};
+
+&usbdrd_dwc3_0 {
+	dr_mode = "otg";
+	extcon = <&u2phy0>;
+	usb-role-switch;
+	status = "okay";
+
+	port {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		dwc3_0_role_switch: endpoint@0 {
+			reg = <0>;
+			remote-endpoint = <&usbc0_role_sw>;
+		};
+	};
+};
+
 &u2phy0 {
 	status = "okay";
 };
@@ -929,85 +917,15 @@
 	status = "okay";
 };
 
-&u2phy1 {
-	status = "okay";
-};
-
-&u2phy1_otg {
-	phy-supply = <&vcc5v0_usb_host>;
-	status = "okay";
-};
-
-&u2phy2 {
-	status = "okay";
-};
-
-&u2phy2_host {
-	status = "okay";
-};
-
-&u2phy3 {
-	status = "okay";
-};
-
-&u2phy3_host {
-	status = "okay";
-};
-
-&usb_host0_ehci {
-	status = "okay";
-};
-
-&usb_host0_ohci {
-	status = "okay";
-};
-
-&usb_host1_ehci {
-	status = "okay";
-};
-
-&usb_host1_ohci {
-	status = "okay";
-};
-
-&usbhost3_0 {
-	status = "okay";
-};
-
-&usbhost_dwc3_0 {
-	status = "okay";
-};
-
-&u2phy1 {
-	status = "okay";
-};
-
-&u2phy1_otg {
-	status = "okay";
-};
-
-&usbdrd3_1{
-	status = "okay";
-};
-
-&usbdrd_dwc3_1{
-	status = "okay";
-};
-
-&usbdp_phy1 {
-	status = "okay";
-};
-
-&usbdp_phy1_u3 {
-	status = "okay";
-};
-
 &usbdp_phy0 {
 	orientation-switch;
-	rockchip,dp-lane-mux = < 0 1 2 3 >;
-	sbu1-dc-gpios = <&gpio0 RK_PC6 GPIO_ACTIVE_HIGH>;
-	sbu2-dc-gpios = <&gpio0 RK_PD3 GPIO_ACTIVE_HIGH>;
-	svid = <0xff01>;
+	/* if use dp */
+	/* 
+	 * rockchip,dp-lane-mux = < 0 1 2 3 >;
+	 * sbu1-dc-gpios = <&gpio0 RK_PC6 GPIO_ACTIVE_HIGH>;
+	 * sbu2-dc-gpios = <&gpio0 RK_PD3 GPIO_ACTIVE_HIGH>;
+	 * svid = <0xff01>;
+	 */
 	status = "okay";
 
 	port {
@@ -1025,20 +943,36 @@
 	};
 };
 
-&usbdp_phy0_dp {
-	status = "okay";
-};
-
 &usbdp_phy0_u3 {
 	status = "okay";
 };
 
-&usbdp_phy1 {
-	rockchip,dp-lane-mux = < 0 1 2 3 >;
+&usbdp_phy0_dp {
 	status = "okay";
 };
 
-&usbdp_phy1_dp {
+/* TYPEC1
+ * usbdrd3_1 + usbdrd_dwc3_1
+ * u2phy1 + u2phy1_otg + usbdp_phy1 + usbdp_phy1_u3
+ */
+&usbdrd3_1 {
+	status = "okay";
+};
+
+&usbdrd_dwc3_1 {
+	status = "okay";
+};
+
+&u2phy1 {
+	status = "okay";
+};
+
+&u2phy1_otg {
+	phy-supply = <&vcc5v0_usb_host>;
+	status = "okay";
+};
+
+&usbdp_phy1 {
 	status = "okay";
 };
 
@@ -1046,29 +980,111 @@
 	status = "okay";
 };
 
-&usbdrd3_0 {
+&usbdp_phy1_dp {
 	status = "okay";
 };
 
-&usbdrd_dwc3_0 {
-	usb-role-switch;
-	status = "okay";
-
-	port {
-		#address-cells = <1>;
-		#size-cells = <0>;
-		dwc3_0_role_switch: endpoint@0 {
-			reg = <0>;
-			remote-endpoint = <&usbc0_role_sw>;
-		};
-	};
-};
-
-&usbdrd3_1 {
+/* USB20_HOST0
+ * usb_host0_ehci + usb_host0_ohci
+ * u2phy2 + u2phy2_host
+ */ 
+&usb_host0_ehci {
 	status = "okay";
 };
 
-&usbdrd_dwc3_1 {
+&usb_host0_ohci {
+	status = "okay";
+};
+
+&u2phy2 {
+	status = "okay";
+};
+
+&u2phy2_host {
+	status = "okay";
+};
+
+/* USB20_HOST1
+ * usb_host1_ehci + usb_host1_ohci
+ * u2phy3 + u2phy3_host
+ */
+&usb_host1_ehci {
+	status = "okay";
+};
+
+&usb_host1_ohci {
+	status = "okay";
+};
+
+&u2phy3 {
+	status = "okay";
+};
+
+&u2phy3_host {
+	status = "okay";
+};
+
+/* USB30_2 | pcie2x1l1 | sata2 => combphy2_psu
+ * usbhost3_0 + usbhost_dwc3_0 | pcie2x1l1 | sata2
+ * combphy2_psu
+ */
+&usbhost3_0 {
+	status = "disabled";
+};
+
+&usbhost_dwc3_0 {
+	status = "disabled";
+};
+
+&pcie2x1l1 {
+	reset-gpios = <&gpio4 RK_PA2 GPIO_ACTIVE_HIGH>;
+	status = "okay";
+};
+
+&sata2 {
+	status = "disabled";
+}; 
+
+&combphy2_psu {
+	status = "okay";
+};
+
+/* pce2x1l0 | sata1 => combphy1_ps */
+&pcie2x1l0 {
+	reset-gpios = <&gpio0 RK_PB0 GPIO_ACTIVE_HIGH>;
+	status = "okay";
+};
+
+&sata1 {
+	status = "disabled";
+}; 
+
+&combphy1_ps {
+	status = "okay";
+};
+
+/* pcie3x4 => pcie30phy */
+&pcie3x4 {
+	reset-gpios = <&gpio4 RK_PB6 GPIO_ACTIVE_HIGH>;
+	vpcie3v3-supply = <&vcc3v3_pcie30>;
+	status = "okay";
+};
+
+&pcie30phy {
+	rockchip,pcie30-phymode = <PHY_MODE_PCIE_AGGREGATION>;
+	status = "okay";
+};
+
+/* pcie2x1l2 | sata0 => combphy0_ps */
+&pcie2x1l2 {
+	status = "disabled";
+};
+
+&sata0 {
+	status = "okay";
+};
+
+&combphy0_ps {
 	status = "okay";
 };
 
