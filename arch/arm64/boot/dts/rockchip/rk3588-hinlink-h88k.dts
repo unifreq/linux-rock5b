@@ -143,8 +143,6 @@
 	vcc3v3_pcie30: vcc3v3-pcie30 {
 		compatible = "regulator-fixed";
 		enable-active-high;
-		regulator-always-on;
-		regulator-boot-on;
 		gpios = <&gpio3 RK_PD5 GPIO_ACTIVE_HIGH>;
 		regulator-min-microvolt = <3300000>;
 		regulator-max-microvolt = <3300000>;
