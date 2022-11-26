@@ -1,0 +1,28 @@
+ROCKCHIP with ES8388 CODECS
+
+Required properties:
+- compatible: "rockchip,rockchip-audio-es8388"
+- rockchip,model: The user-visible name of this sound complex
+- rockchip,i2s-controller: The phandle of the Rockchip I2S controller that's
+  connected to the CODEC
+- rockchip,audio-codec: The phandle of the es8388 audio codec
+
+Optionnal properties:
+- rockchip,hp-en-gpios = The phandle of the GPIO that power up/down the
+  headphone.
+- rockchip,hp-det-gpios = The phandle of the GPIO that detects the headphone
+- pinctrl-names, pinctrl-0: Please refer to pinctrl-bindings.txt
+
+Example:
+	
+sound {
+	compatible = "rockchip,rockchip-audio-es8388";
+	rockchip,model = "Analog audio output";
+	rockchip,i2s-controller = <&i2s>;
+	rockchip,audio-codec = <&es8388>;
+	rockchip,hp-en-gpios = <&gpio8 0 GPIO_ACTIVE_HIGH>;
+	rockchip,hp-det-gpios = <&gpio7 7 GPIO_ACTIVE_HIGH>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&headphone>;
+};
+
