@@ -179,12 +179,13 @@
 	vbus5v0_typec: vbus5v0-typec {
 		compatible = "regulator-fixed";
 		regulator-name = "vbus5v0_typec";
+		regulator-min-microvolt = <5000000>;
+		regulator-max-microvolt = <5000000>;
+		regulator-boot-on;
 		enable-active-high;
 		gpio = <&gpio4 RK_PA7 GPIO_ACTIVE_HIGH>;
 		pinctrl-names = "default";
 		pinctrl-0 = <&typec5v_pwren>;
-		regulator-min-microvolt = <5000000>;
-		regulator-max-microvolt = <5000000>;
 		vin-supply = <&vcc5v0_sys>;
 	};
 
@@ -427,8 +428,6 @@
 };
 
 &dp0 {
-	pinctrl-0 = <&dp0m2_pins>;
-	pinctrl-names = "default";
 	status = "okay";
 };
 
@@ -570,7 +569,6 @@
 
 &i2c6 {
 	status = "okay";
-	clock-frequency = <400000>;
 
 	usbc0: husb311@4e {
 		status = "okay";
@@ -757,7 +755,7 @@
 };
 
 &route_dp0 {
-	status = "okay";
+	status = "disabled";
 	force-output;
 	connect = <&vp2_out_dp0>;
 
@@ -970,7 +968,6 @@
 	status = "okay";
 	orientation-switch;
 
-	/* if use dp */
 	rockchip,dp-lane-mux = < 2 3 >;
 
 	svid = <0xff01>;
