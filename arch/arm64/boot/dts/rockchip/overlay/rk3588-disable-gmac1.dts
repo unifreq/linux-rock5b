@@ -2,9 +2,9 @@
 /plugin/;
 / {
 	fragment@0 {
-		target = <&gmac0>;
+		target = <&gmac1>;
 		__overlay__ {
-			status = "okay";
+			status = "diabled";
 		};
 	};
 };

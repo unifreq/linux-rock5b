@@ -1181,7 +1181,7 @@
 		     &gmac0_rgmii_bus>;
 
 	tx_delay = <0x44>;
-	status = "disabled";
+	status = "okay";
 };
 
 &mdio0 {
