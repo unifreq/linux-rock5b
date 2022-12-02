@@ -414,7 +414,7 @@
 };
 
 &crypto {
-	status = "okay";
+	status = "disabled";
 };
 
 &dfi {
